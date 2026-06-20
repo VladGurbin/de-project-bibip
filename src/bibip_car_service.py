@@ -12,11 +12,9 @@ class CarService:
 
         if models_path.exists():
             with open(models_path, 'r', encoding='utf-8') as file:
-                lines = file.readlines()
+                line_number = sum(1 for _ in file)
         else:
-            lines = []
-
-        line_number = len(lines)
+            line_number = 0       
 
         with open(models_path, 'a', encoding='utf-8') as file:
             file.write(model.model_dump_json() + '\n')
