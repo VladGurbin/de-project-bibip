@@ -6,7 +6,7 @@ class CarService:
     def __init__(self, root_directory_path: str) -> None:
         self.root_directory_path = root_directory_path
 
-    # Задание 1. Сохранение автомобилей и моделей
+    # Инициализация и сохранение моделей авто в БД
     def add_model(self, model: Model) -> Model:
         models_path = Path(self.root_directory_path) / 'models.txt'
 
@@ -25,7 +25,7 @@ class CarService:
             file.write(str(model.id) + '|' + str(line_number) + '\n')
         return model
 
-    # Задание 1. Сохранение автомобилей и моделей
+    # Инициализация и сохранение моделей авто в БД
     def add_car(self, car: Car) -> Car:
         cars_path = Path(self.root_directory_path) / 'cars.txt'
 
@@ -46,7 +46,7 @@ class CarService:
             file.write(car.vin + '|' + str(line_number) + '\n')
         return car
 
-    # Задание 2. Сохранение продаж.
+    # Обработка транзакции продажи и обновление статуса авто.
     def sell_car(self, sale: Sale) -> Car:
         sales_path = Path(self.root_directory_path) / 'sales.txt'
 
@@ -99,7 +99,7 @@ class CarService:
 
         return car
 
-    # Задание 3. Доступные к продаже
+    # Выборка автомобилей по их текущему статусу
     def get_cars(self, status: CarStatus) -> list[Car]:
         cars_path = Path(self.root_directory_path) / 'cars.txt'
         with open(cars_path, 'r', encoding='utf-8') as file:
@@ -114,7 +114,7 @@ class CarService:
 
         return cars
 
-    # Задание 4. Детальная информация
+    # Агрегация полных данных об автомобиле (аналог операции JOIN)
     def get_car_info(self, vin: str) -> CarFullInfo | None:
         cars_index_path = Path(self.root_directory_path) / 'cars_index.txt'
 
@@ -190,7 +190,7 @@ class CarService:
             sales_cost=sales_cost
         )
 
-    # Задание 5. Обновление ключевого поля
+    # Каскадное обновление идентификатора (VIN) и синхронизация индекса
     def update_vin(self, vin: str, new_vin: str) -> Car:
         cars_index_path = Path(self.root_directory_path) / 'cars_index.txt'
 
@@ -236,7 +236,7 @@ class CarService:
 
         return car
 
-    # Задание 6. Удаление продажи
+    # Откат транзакции продажи и восстановление коммерческого статуса авто
     def revert_sale(self, sales_number: str) -> Car:
         sales_path = Path(self.root_directory_path) / 'sales.txt'
 
@@ -296,7 +296,7 @@ class CarService:
 
         return car
 
-    # Задание 7. Самые продаваемые модели
+    # Расчет бизнес-метрик: выгрузка топ-3 моделей по объему продаж
     def top_models_by_sales(self) -> list[ModelSaleStats]:
         sales_by_model: dict[int, int] = {}
 
